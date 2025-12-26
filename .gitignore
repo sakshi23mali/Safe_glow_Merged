@@ -37,3 +37,7 @@ yarn-error.*
 *.tsbuildinfo
 
 app-example
+node_modules/
+.env
+__pycache__/
+*.pyc
