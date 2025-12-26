@@ -1,13 +1,34 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import { Platform } from "react-native";
 
-import CameraScreen from "./screens/CameraScreen";
-import HomeScreen from "./screens/HomeScreen";
-import LoginScreen from "./screens/LoginScreen";
-import ProductLoadingScreen from "./screens/ProductLoadingScreen";
-import ProductScreen from "./screens/ProductScreen";
-import QuizScreen from "./screens/QuizScreen";
-import RegisterScreen from "./screens/RegisterScreen";
+// Fix for "This document requires 'TrustedHTML' assignment" error in some browser environments (like Trae preview)
+if (
+  Platform.OS === "web" &&
+  typeof window !== "undefined" &&
+  window.trustedTypes &&
+  window.trustedTypes.createPolicy
+) {
+  if (!window.trustedTypes.defaultPolicy) {
+    try {
+      window.trustedTypes.createPolicy("default", {
+        createHTML: (string) => string,
+        createScriptURL: (string) => string,
+        createScript: (string) => string,
+      });
+    } catch (e) {
+      console.error("Failed to create Trusted Types policy", e);
+    }
+  }
+}
+
+import CameraScreen from "./client/features/camera/CameraScreen";
+import HomeScreen from "./client/features/home/HomeScreen";
+import LoginScreen from "./client/features/auth/LoginScreen";
+import ProductLoadingScreen from "./client/features/products/ProductLoadingScreen";
+import ProductScreen from "./client/features/products/ProductScreen";
+import QuizScreen from "./client/features/quiz/QuizScreen";
+import RegisterScreen from "./client/features/auth/RegisterScreen";
 
 const Stack = createStackNavigator();
 

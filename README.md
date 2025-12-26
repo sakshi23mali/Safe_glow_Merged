@@ -1,50 +1,84 @@
-# Welcome to your Expo app 👋
+# SafeGlow
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+AI-assisted skincare safety analysis with personalized product recommendations.
 
-## Get started
+## Project structure
 
-1. Install dependencies
+- `client/`: frontend (Expo / React Native) feature modules
+- `server/`: backend (Node.js / Express) API
 
-   ```bash
-   npm install
-   ```
+## Prerequisites
 
-2. Start the app
+- Node.js (LTS recommended)
+- MongoDB (local or hosted)
 
-   ```bash
-   npx expo start
-   ```
+## Setup
 
-In the output, you'll find options to open the app in a
+### 1) Frontend environment
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+Create a `.env` in the project root:
 
 ```bash
-npm run reset-project
+EXPO_PUBLIC_API_BASE_URL=http://localhost:4000
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### 2) Backend environment
 
-## Learn more
+Copy `server/.env.example` to `server/.env` and fill in values:
 
-To learn more about developing your project with Expo, look at the following resources:
+```bash
+PORT=4000
+MONGO_URI=mongodb://127.0.0.1:27017/safeglow
+JWT_SECRET=replace-with-strong-secret
+CLIENT_ORIGINS=http://localhost:19006,http://localhost:8081
+GOOGLE_CSE_KEY=your_google_api_key
+GOOGLE_CSE_CX=your_search_engine_id
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## Run locally
 
-## Join the community
+The easiest way to start both servers is to use the unified dev command from the project root:
 
-Join our community of developers creating universal apps.
+```bash
+npm install
+npm run dev
+```
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+This will concurrently start:
+- **Backend**: Express server on port 4000 with nodemon
+- **Frontend**: Expo/Metro bundler on port 8081
+
+Alternatively, you can run them separately:
+
+### Backend
+```bash
+cd server
+npm install
+npm run dev
+```
+
+### Frontend
+```bash
+npm install
+npm run start
+```
+
+## Features
+
+- **Skin Type Analysis**: Quiz-based skin type identification.
+- **Product Safety Analysis**: Scans product descriptions for potentially irritating ingredients based on your skin type.
+- **Personalized Recommendations**: Fetches real-world products using Google Custom Search API.
+- **Resilient Search**: Automatically falls back to high-quality mock data if API limits are reached or keys are invalid.
+
+## API documentation
+
+OpenAPI spec: `server/openapi.json`
+
+## Testing
+
+Backend tests:
+
+```bash
+cd server
+npm test
+```
